@@ -16,17 +16,12 @@ class CreateRequestedDocumentsTable extends Migration
         Schema::create('requested_documents', function (Blueprint $table) {
             $table->id();
             $table->string('request_number');
+            $table->string('user_id');
             $table->string('resident_id');
             $table->string('document_id');
             $table->date('claiming_date')->nullable();
-            $table->float('amount_to_pay');
-            $table->string('receipt');
-            
-            $table->longText('note')->nullable();
-            $table->string('status')->default('PENDING');
-            $table->string('claiming_option');
-            $table->string('downloadable')->nullable();
-            $table->boolean('isPaid')->default(false);
+            $table->float('amount_to_pay')->nullable();
+            $table->longText('remarks')->nullable();
             $table->boolean('isRemove')->default(false);
             $table->timestamps();
         });

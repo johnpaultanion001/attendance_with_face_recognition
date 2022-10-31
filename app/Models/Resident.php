@@ -9,16 +9,21 @@ class Resident extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
-        'first_name',
-        'last_name',
-        'middle_name',
-        'id_image',
-        'contact_number',
+        'name',
         'address',
-        'qr_code',
-        'status',
-        'isRegister'
+        'birthdate',
+        'birthplace',
+        'civil_status',
+        'gender',
+        'contact_number',
+        'isVoter',
+        'isRecord',
+        'isEmployed',
+        'isStudent',
+        'isPWD',
+        'isSr',
+        'isRemove',
+        
     ];
 
     public function requestedDocuments()

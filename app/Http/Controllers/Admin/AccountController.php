@@ -60,8 +60,8 @@ class AccountController extends Controller
             'role_id' => $request->input('role'),
         ]);
         ActivityLog::create([
-            'activity'  => 'Activity: Create newly staff <br>
-                            Staff Name: '.$account->name.
+            'activity'  => 'Activity: Create newly admin <br>
+                            Admin Name: '.$account->name.
                             '<br> User: '. auth()->user()->name,
                             
         ]);

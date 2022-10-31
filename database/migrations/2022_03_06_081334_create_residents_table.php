@@ -15,16 +15,20 @@ class CreateResidentsTable extends Migration
     {
         Schema::create('residents', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('middle_name')->nullable();
-            $table->string('id_image')->nullable();
-            $table->string('contact_number')->unique()->nullable();
+            $table->string('name')->nullable();
             $table->string('address')->nullable();
-            $table->string('qr_code')->nullable();
-            $table->string('status')->default('PENDING');
-            $table->boolean('isRegister')->default(false);
+            $table->string('birthdate')->nullable();
+            $table->string('birthplace')->nullable();
+            $table->string('civil_status')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->boolean('isVoter')->default(false);
+            $table->boolean('isRecord')->default(false);
+            $table->boolean('isEmployed')->default(false);
+            $table->boolean('isStudent')->default(false);
+            $table->boolean('isPWD')->default(false);
+            $table->boolean('isSr')->default(false);
+            $table->boolean('isRemove')->default(false);
             
 
             $table->timestamps();

@@ -43,8 +43,8 @@ class UserSeeder extends Seeder
             // For Staff
             [
                 'id'                => '3',
-                'name'              => 'Johnpaul Staff',
-                'email'             => 'staff@staff.com',
+                'name'              => 'Teacher 1',
+                'email'             => 'teacher@teacher.com',
                 'password'          => '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896' ,//password
                 'remember_token'    => null,
                 'contact_number'    => '09776668822',
@@ -55,8 +55,8 @@ class UserSeeder extends Seeder
             ],
             [
                 'id'                => '4',
-                'name'              => 'Johnpaul Staff2',
-                'email'             => 'staff2@staff2.com',
+                'name'              => 'Teacher 2',
+                'email'             => 'teacher2@teacher2.com',
                 'password'          => '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896' ,//password
                 'remember_token'    => null,
                 'contact_number'    => '09776668823',
@@ -64,19 +64,6 @@ class UserSeeder extends Seeder
                 'created_at'        => date("Y-m-d H:i:s"),
                 'updated_at'        => date("Y-m-d H:i:s"),
                 'email_verified_at' => date("Y-m-d H:i:s"),
-            ],
-             // For resident
-            [
-                'id'                    => '5',
-                'name'                  => null,
-                'email'                 => 'johnpaultanion001@gmail.com',
-                'password'              => '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896' ,//password
-                'remember_token'        => null,
-                'contact_number'        => null,
-                'address'               => null,
-                'created_at'            => date("Y-m-d H:i:s"),
-                'updated_at'            => date("Y-m-d H:i:s"),
-                'email_verified_at'     => date("Y-m-d H:i:s"),
             ],
         ];
 

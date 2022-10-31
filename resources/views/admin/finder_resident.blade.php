@@ -44,8 +44,8 @@
                         <div class="form-group">
                           <select name="select_resident" id="select_resident" class="form-control select2" style="width: 100%;">
                             <option value="">Select resident</option>
-                            @foreach($residents as $resident)
-                              <option value="{{$resident->id}}" {{$resident1->id == $resident->id ? 'selected' : ''}}>{{$resident->last_name}},{{$resident->first_name}} ({{$resident->middle_name ?? 'n/a'}})</option>
+                            @foreach($residents as $resident1)
+                              <option value="{{$resident1->id}}" {{$resident->id == $resident1->id ? 'selected' : ''}}>{{$resident1->name}}</option>
                             @endforeach
                           </select>
                         </div>
@@ -68,82 +68,116 @@
                 <thead>
                   <tr>
                     <th class="text-secondary opacity-7"></th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">ID IMAGE</th>
                     <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Name</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Email</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Contact Number</th>
                     <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Address</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Status</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Created At</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Contact Number</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Birth Date</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Birth Place</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Civil Status</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Gender</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Is Voter?</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">With Record?</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Is Employed?</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Is Student?</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Is PWD?</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Senior Citizen?</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Register At</th>
                   </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <button id="{{$resident1->id}}" class="btn btn-primary btn-sm view" >
+                            <button id="{{$resident->id}}" class="btn btn-primary btn-sm view" >
                               VIEW/EDIT
                             </button>
                           </div>
                         </div>
                       </td>
                       <td>
-                            <div class="d-flex px-2 py-1">
-                                <div class="d-flex flex-column justify-content-center">
-                                    <a href="/resident/img/id/{{$resident1->id_image}}" target="_blank">
-                                        <img style="vertical-align: bottom;"  height="100" width="100" src="{{URL::asset('/resident/img/id/'.$resident1->id_image)}}" />
-                                    </a>
-                                </div>
-                            </div>
-                      </td>
-                      <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$resident1->first_name ?? ''}} {{$resident1->last_name ?? ''}}  ({{$resident1->middle_name ?? 'n/a'}})</h6>
+                            <h6 class="mb-0 text-sm">{{$resident->name ?? ''}}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$resident1->user->email ?? ''}}</h6>
+                            <h6 class="mb-0 text-sm">{{$resident->address ?? ''}}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$resident1->contact_number ?? ''}}</h6>
+                            <h6 class="mb-0 text-sm">{{$resident->contact_number ?? ''}}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$resident1->address ?? ''}}</h6>
+                            <h6 class="mb-0 text-sm">{{$resident->birthdate ?? ''}}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{$resident->birthplace ?? ''}}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{$resident->civil_status ?? ''}}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{$resident->gender ?? ''}}</h6>
                           </div>
                         </div>
                       </td>
                       <td  class="align-middle text-center text-sm">
-                          <span class="badge badge-sm 
-                            @if($resident->status == 'PENDING')
-                              bg-warning
-                            @elseif($resident->status == 'APPROVED')
-                              bg-success
-                            @elseif($resident->status == 'DECLINED')
-                              bg-warning
-                            @elseif($resident->status == 'DEACTIVATED')
-                              bg-danger
-                            @endif">
-                           
-                            {{$resident->status}}
+                          <span class="badge badge-sm {{$resident->isVoter == true ? 'bg-success':'bg-danger'}}">
+                            {{$resident->isVoter == true ? 'YES':'NO'}}
+                          </span>
+                      </td>
+                      <td  class="align-middle text-center text-sm">
+                          <span class="badge badge-sm {{$resident->isRecord == true ? 'bg-success':'bg-danger'}}">
+                            {{$resident->isRecord == true ? 'YES':'NO'}}
+                          </span>
+                      </td>
+                      <td  class="align-middle text-center text-sm">
+                          <span class="badge badge-sm {{$resident->isEmployed == true ? 'bg-success':'bg-danger'}}">
+                            {{$resident->isEmployed == true ? 'YES':'NO'}}
+                          </span>
+                      </td>
+                      <td  class="align-middle text-center text-sm">
+                          <span class="badge badge-sm {{$resident->isStudent == true ? 'bg-success':'bg-danger'}}">
+                            {{$resident->isStudent == true ? 'YES':'NO'}}
+                          </span>
+                      </td>
+                      <td  class="align-middle text-center text-sm">
+                          <span class="badge badge-sm {{$resident->isPWD == true ? 'bg-success':'bg-danger'}}">
+                            {{$resident->isPWD == true ? 'YES':'NO'}}
+                          </span>
+                      </td>
+                      <td  class="align-middle text-center text-sm">
+                          <span class="badge badge-sm {{$resident->isSr == true ? 'bg-success':'bg-danger'}}">
+                            {{$resident->isSr == true ? 'YES':'NO'}}
                           </span>
                       </td>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$resident1->created_at->format('M j , Y h:i A') ?? ''}}</h6>
+                            <h6 class="mb-0 text-sm">{{$resident->created_at->format('M j , Y h:i A') ?? ''}}</h6>
                          
                           </div>
                         </div>
@@ -170,29 +204,22 @@
                   <tr>
                     <th class="text-secondary opacity-7"></th>
                     <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Request Number</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Payment</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Status</th>
                     <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Resident</th>
                     <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Document</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Tentative Claiming Date</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Requirements</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Claiming Option</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Claiming Date</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Payment</th>
                     <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Amount To Pay</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Requested By</th>
                     <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Requested At</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach($requested_documents as $document)
-                    <tr>
+                  <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <button id="{{$document->id}}" class="btn btn-info btn-sm msg" >
-                              {{$document->messages()->count()}}  MESSAGE{{$document->messages()->count() == 0 ? '':'S'}} 
-                            </button>
-                            <button id="{{$document->id}}" class="btn btn-primary btn-sm view_edit" >
-                              VIEW/EDIT
-                            </button>
+                            <a href="/admin/request_document/{{$document->resident->id}}/{{$document->document->id}}/{{$document->id}}" class="btn btn-primary btn-sm">VIEW/EDIT</a>
                           </div>
                         </div>
                       </td>
@@ -206,23 +233,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <span class="badge badge-sm {{$document->isPaid == 1 ? 'bg-gradient-success' : 'bg-gradient-danger'}}">
-                              {{$document->isPaid == 1 ? 'Paid' : 'Unpaid'}}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <span class="badge badge-sm {{$document->status == 'PENDING' ? 'bg-gradient-warning' : ''}}  {{$document->status == 'APPROVED' ? 'bg-gradient-success' : ''}} {{$document->status == 'COMPLETED' ? 'bg-gradient-primary' : ''}} {{$document->status == 'CANCELLED' || $document->status == 'DECLINED' ? 'bg-gradient-danger' : ''}}">{{$document->status}}</span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$document->resident->first_name ?? ''}} {{$document->resident->last_name ?? ''}}  ({{$document->resident->middle_name ?? 'n/a'}})</h6>
+                            <h6 class="mb-0 text-sm">{{$document->resident->name ?? ''}}</h6>
                           </div>
                         </div>
                       </td>
@@ -236,37 +247,28 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$document->claiming_date ?? 'N/A'}}</h6>
+                            <h6 class="mb-0 text-sm">{{$document->claiming_date ?? ''}}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <p class="text-xs font-weight-bold mb-0">
-                              @foreach($document->document->requirements()->get() as $requirement)
-                                {{$requirement->name}} <br>
-                              @endforeach
-                            </p>
+                            <h6 class="mb-0 text-sm"> ₱ {{$document->document->amount ?? ''}}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <span class="badge badge-sm bg-gradient-success">{{$document->claiming_option  ?? ''}}</span>
+                            <h6 class="mb-0 text-sm">  ₱ {{$document->amount_to_pay ?? ''}}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"></h6>
-                            <p class="text-xs font-weight-bold mb-0">
-                              ₱ {{$document->amount_to_pay ?? ''}}
-                              <a href="" class="link-primary"> <br>
-                               View Receipt</a>
-                            </p>
+                            <h6 class="mb-0 text-sm">{{$document->user->name ?? ''}}</h6>
                           </div>
                         </div>
                       </td>
@@ -274,11 +276,9 @@
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">{{$document->created_at->format('M j , Y h:i A') ?? ''}}</h6>
-                         
                           </div>
                         </div>
                       </td>
-                      
                     </tr>
                   @endforeach
                 </tbody>
@@ -315,44 +315,10 @@
             @csrf
             <div class="card-body">
                 <div class="form-group">
-                    <label class="control-label text-uppercase" >ID Image </label> 
-                    <input type="file" name="id_image" id="id_image1" class="form-control" accept="image/*" />
+                    <label class="control-label text-uppercase" >Name <span class="text-danger">*</span></label>
+                    <input type="text" name="name" id="name" class="form-control" />
                     <span class="invalid-feedback" role="alert">
-                        <strong id="error-id_image1"></strong>
-                    </span>
-                    <label class="control-label text-uppercase" >Current Image: <a href="" id="current_image_id" class="text-warning" target="_blank"></a></label>
-                </div>
-                <div class="form-group">
-                    <label class="control-label text-uppercase" >First Name <span class="text-danger">*</span></label>
-                    <input type="text" name="first_name" id="first_name" class="form-control" />
-                    <span class="invalid-feedback" role="alert">
-                        <strong id="error-first_name"></strong>
-                    </span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label text-uppercase" >Middle Name</label>
-                    <input type="text" name="middle_name" id="middle_name" class="form-control" />
-                    <span class="invalid-feedback" role="alert">
-                        <strong id="error-middle_name"></strong>
-                    </span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label text-uppercase" >Last Name <span class="text-danger">*</span></label>
-                    <input type="text" name="last_name" id="last_name" class="form-control" />
-                    <span class="invalid-feedback" role="alert">
-                        <strong id="error-last_name"></strong>
-                    </span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label text-uppercase" >Email <span class="text-danger">*</span></label>
-                    <input type="text" name="email" id="email" class="form-control" readonly/>
-                   
-                </div>
-                <div class="form-group">
-                    <label class="control-label text-uppercase" >Contact Number <span class="text-danger">*</span></label>
-                    <input type="number" name="contact_number" id="contact_number" class="form-control" />
-                    <span class="invalid-feedback" role="alert">
-                        <strong id="error-contact_number"></strong>
+                        <strong id="error-name"></strong>
                     </span>
                 </div>
                 <div class="form-group">
@@ -363,188 +329,89 @@
                     </span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label text-uppercase" >Status <span class="text-danger">*</span></label>
-                    <select name="status" id="status" class="form-control" style="appearance: searchfield;">
-                        <option value="PENDING">PENDING</option>
-                        <option value="APPROVED">APPROVED</option>
-                        <option value="DECLINED">DECLINED</option>
-                        <option value="DEACTIVATED">DEACTIVATED</option>
+                    <label class="control-label text-uppercase" >Contact Number <span class="text-danger">*</span></label>
+                    <input type="number" name="contact_number" id="contact_number" class="form-control" />
+                    <span class="invalid-feedback" role="alert">
+                        <strong id="error-contact_number"></strong>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >Birth Date <span class="text-danger">*</span></label>
+                    <input type="date" name="birthdate" id="birthdate" class="form-control" />
+                    <span class="invalid-feedback" role="alert">
+                        <strong id="error-birthdate"></strong>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >Birth Place <span class="text-danger">*</span></label>
+                    <input type="text" name="birthplace" id="birthplace" class="form-control" />
+                    <span class="invalid-feedback" role="alert">
+                        <strong id="error-birthplace"></strong>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >Civil Status <span class="text-danger">*</span></label>
+                    <select name="civil_status" id="civil_status" class="form-control" style="appearance: searchfield;">
+                        <option value="SINGLE">SINGLE</option>
+                        <option value="MARRIED">MARRIED</option>
+                        <option value="WIDOWED">WIDOWED</option>
                     </select>
                 </div>
-                <div class="card-footer text-center">
-                    <input type="submit" name="action_button" id="action_button" class="text-uppercase btn-wd btn btn-primary" value="Submit" />
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >Gender <span class="text-danger">*</span></label>
+                    <select name="gender" id="gender" class="form-control" style="appearance: searchfield;">
+                        <option value="MALE">MALE</option>
+                        <option value="FEMALE">FEMALE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >Is Voter? <span class="text-danger">*</span></label>
+                    <select name="isVoter" id="isVoter" class="form-control" style="appearance: searchfield;">
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >WITH RECORD? <span class="text-danger">*</span></label>
+                    <select name="isRecord" id="isRecord" class="form-control" style="appearance: searchfield;">
+                        <option value="0">NO</option>
+                        <option value="1">YES</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >Is Employed? <span class="text-danger">*</span></label>
+                    <select name="isEmployed" id="isEmployed" class="form-control" style="appearance: searchfield;">
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >Is Student? <span class="text-danger">*</span></label>
+                    <select name="isStudent" id="isStudent" class="form-control" style="appearance: searchfield;">
+                        <option value="0">NO</option>
+                        <option value="1">YES</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >Is PWD? <span class="text-danger">*</span></label>
+                    <select name="isPWD" id="isPWD" class="form-control" style="appearance: searchfield;">
+                        <option value="0">NO</option>
+                        <option value="1">YES</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-uppercase" >Is Senior? <span class="text-danger">*</span></label>
+                    <select name="isSr" id="isSr" class="form-control" style="appearance: searchfield;">
+                        <option value="0">NO</option>
+                        <option value="1">YES</option>
+                    </select>
+                </div>
+                <div class="card-footer text-center m-4">
+                    <input type="submit" name="action_button" id="action_button" class="text-uppercase btn-wd btn btn-primary text-uppercase" value="Submit" />
+                   
                 </div>
             </div>
             
-        </form>
-    </div>
-  </div>
-</div>
-
-<div class="fixed-plugin1">
-  <div class="card shadow-lg">
-    <div class="card-header pb-0 pt-3 ">
-      
-      <div class="float-end mt-2">
-        <button class="btn btn-link text-danger p-0 fixed-plugin-close-button1">
-          <i class="fa fa-close"></i>
-        </button>
-      </div>
-      <br>
-      <div class="float-start">
-        <h6 class="text-uppercase">REQUESTED DOCUMENT INFORMATION</h6>
-      </div>
-      <!-- End Toggle Button -->
-    </div>
-    <hr class="horizontal dark my-1">
-    <div class="overflow-auto">
-        <form method="post" id="myForm1" class="contact-form">
-              @csrf
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label text-uppercase" >Payment <span class="text-danger">*</span></label>
-                        <select name="payment" id="payment" class="form-control" style="appearance: searchfield;">
-                            <option value="1">PAID</option>
-                            <option value="0">UNPAID</option>
-                        </select>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label text-uppercase" >Status <span class="text-danger">*</span></label>
-                        <select name="status" id="status_requested" class="form-control" style="appearance: searchfield;">
-                            <option value="PENDING">PENDING</option>
-                            <option value="APPROVED">APPROVED</option>
-                            <option value="COMPLETED">COMPLETED</option>
-                            <option value="DECLINED">DECLINED</option>
-                        </select>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label text-uppercase" >Resident</label>
-                        <input type="text" name="resident" id="resident" class="form-control" readonly />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label text-uppercase" >Document</label>
-                        <input type="text" name="document" id="document" class="form-control" readonly />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label text-uppercase" >Tentative Claiming Date <span class="text-danger">*</span></label>
-                        <input type="date" name="claiming_date" id="claiming_date" class="form-control"/>
-                        <span class="invalid-feedback" role="alert">
-                            <strong id="error-claiming_date"></strong>
-                        </span>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label text-uppercase" >Claiming Option</label>
-                        <input type="text" name="claimed_option" id="claimed_option" class="form-control" readonly/>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                              <label class="control-label text-uppercase" >Downloadable File</label>
-                              <input type="file" name="downloadable_file" id="downloadable_file" class="form-control"  />
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label text-uppercase" >Current File</label>
-                                  <ul class="list-group">
-                                    <a href="#" class="text-primary" id="current_file" target="_blank"></a>
-                                  </ul>
-                            </div>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label text-uppercase" >Requirements</label>
-                              <ul class="list-group" id="requirement_list">
-                              </ul>
-                            
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <label class="control-label text-uppercase" >Uploaded Requirements</label>
-                                <ul class="list-group" id="uploaded_requirement">
-                                </ul>
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                              <label class="control-label text-uppercase" >Amount To Pay</label>
-                              <input type="text" name="amount_to_pay" id="amount_to_pay" class="form-control" readonly/>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label text-uppercase" >Uploaded Receipt</label>
-                                  <ul class="list-group">
-                                    <a href="#" class="text-primary" id="uploaded_receipt" target="_blank"></a>
-                                  </ul>
-                            </div>
-                        </div>
-                      </div>
-                  </div>
-                </div>
-              
-              
-            
-                  <div class="card-footer text-center">
-                      <input type="submit" name="action_button_request" id="action_button_request" class="text-uppercase btn-wd btn btn-primary" value="Submit" />
-                  </div>
-              </div>
-        </form>
-    </div>
-  </div>
-</div>
-
-<div class="fixed-plugin2">
-  <div class="card shadow-lg">
-    <div class="card-header pb-0 pt-3 ">
-      
-      <div class="float-end mt-2">
-        <button class="btn btn-link text-danger p-0 fixed-plugin-close-button2">
-          <i class="fa fa-close"></i>
-        </button>
-      </div>
-      <br>
-      <div class="float-start">
-        <h6 class="text-uppercase title_head"></h6>
-      </div>
-      <!-- End Toggle Button -->
-    </div>
-    <hr class="horizontal dark my-1">
-    <div class="overflow-auto">
-      <form method="post" id="myMsgForm" class="contact-form">
-            @csrf
-              <div class="form-group">
-                <input type="text" class="form-control" id="message" name="message" placeholder="Enter a message" required>
-                <small class="text-primary" id="warning_text"></small>
-              </div>
-              <div class="form-group">
-                <ul class="list-group" id="msg_section">
-                
-                </ul>
-              </div>
         </form>
     </div>
   </div>
@@ -573,13 +440,7 @@
                       if(key == $('#'+key).attr('id')){
                           $('#'+key).val(value)
                       }
-                      if(key == 'id_image'){
-                        $('#current_image_id').attr('href','/resident/img/id/'+value)
-                        $('#current_image_id').text(value)
-                      }
                   })
-                  $('#email').val(data.email);
-                  $('#status').val(data.status);
               }
           })
 
@@ -599,15 +460,13 @@
       $('#myForm').on('submit', function(event){
         event.preventDefault();
         $('.form-control').removeClass('is-invalid')
+        var url = "/admin/residents/" + id;
+        var method = "PUT";
 
         $.ajax({
-            url: '/admin/residents/'+id,
-            method:'POST',
-            data:  new FormData(this),
-            contentType: false,
-            cache: false,
-            processData: false,
-
+            url: url,
+            method: method,
+            data: $(this).serialize(),
             dataType:"json",
             beforeSend:function(){
                 $("#action_button").attr("disabled", true);
@@ -616,120 +475,6 @@
             success:function(data){
                 $("#action_button").attr("disabled", false);
                 $("#action_button").val("Submit");
-
-                if(data.errors){
-                    $.each(data.errors, function(key,value){
-                        if(key == $('#'+key).attr('id')){
-                            $('#'+key).addClass('is-invalid')
-                            $('#error-'+key).text(value)
-                        }
-                        if(key == 'id_image'){
-                            $('#id_image1').addClass('is-invalid')
-                            $('#error-id_image1').text(value)
-                        }
-                    })
-                }
-              if(data.success){
-                    $.confirm({
-                        title: data.success,
-                        content: "",
-                        type: 'green',
-                        buttons: {
-                            confirm: {
-                                text: '',
-                                btnClass: 'btn-green',
-                                keys: ['enter', 'shift'],
-                                action: function(){
-                                    location.reload();
-                                }
-                            },
-                        }
-                    });
-                }
-              
-            }
-        });
-      });
-
-
-      var id1 = null;
-      $(document).on('click', '.view_edit', function(){
-          id1 = $(this).attr('id');
-
-          $.ajax({
-                  url :"/admin/requested_documents/"+id1,
-                  dataType:"json",
-                  method:"get",
-                  beforeSend:function(){
-                    $("#action_button").attr("disabled", true);
-                  },
-                  success:function(data){
-                    $("#action_button").attr("disabled", false);
-
-                    $('#resident').val(data.resident)
-                    $('#document').val(data.document)
-                    $('#claiming_date').val(data.claiming_date);
-                    $('#claimed_option').val(data.claimed_option);
-                    $('#payment').val(data.payment);
-                    $('#status_requested').val(data.status);
-
-                    
-
-                    var requirement = '';
-                    $.each(data.requirement, function(key,value){
-                        requirement += '<li class="list-group-item">'+value.name+'</li>';
-                    });
-                    $('#requirement_list').empty().append(requirement);
-
-                    var uploaded_requirement = '';
-                    $.each(data.uploaded_requirement, function(key,value){
-                        uploaded_requirement += '<a href="/resident/requirements/'+value.name+'" class="text-primary" target="_blank">'+value.name+'</a>';
-                    });
-                    $('#uploaded_requirement').empty().append(uploaded_requirement);
-
-                    $('#amount_to_pay').val(data.amount_to_pay)
-                    $('#uploaded_receipt').attr('href','/resident/receipt/'+ data.uploaded_receipt);
-                    $('#uploaded_receipt').text(data.uploaded_receipt);
-
-                    $('#current_file').attr('href','/resident/downloadable_file/'+ data.downloadable);
-                    $('#current_file').text(data.downloadable);
-                  }
-          });
-
-          var fixedPlugin = document.querySelector('.fixed-plugin1');
-          var fixedPlugin1 = document.querySelector('.fixed-plugin');
-          var fixedPlugin2 = document.querySelector('.fixed-plugin2');
-
-          if (!fixedPlugin.classList.contains('show')) {
-              fixedPlugin.classList.add('show');
-              fixedPlugin1.classList.remove('show');
-              fixedPlugin2.classList.remove('show');
-          } else {
-              fixedPlugin.classList.remove('show');
-          }
-
-      });
-
-      $('#myForm1').on('submit', function(event){
-        event.preventDefault();
-        $('.form-control').removeClass('is-invalid')
-
-        $.ajax({
-            url: '/admin/requested_documents/'+id1,
-            method:'POST',
-            data:  new FormData(this),
-            contentType: false,
-            cache: false,
-            processData: false,
-
-            dataType:"json",
-            beforeSend:function(){
-                $("#action_button_request").attr("disabled", true);
-                $("#action_button_request").val("Submitting");
-            },
-            success:function(data){
-                $("#action_button_request").attr("disabled", false);
-                $("#action_button_request").val("Submit");
 
                 if(data.errors){
                     $.each(data.errors, function(key,value){
@@ -766,99 +511,7 @@
         window.location.href = '/admin/finder_resident/'+resident;
       });
 
-      $(document).on('click', '.fixed-plugin-close-button1', function(){
-          var fixedPlugin = document.querySelector('.fixed-plugin1');
-              fixedPlugin.classList.remove('show');
-      });
-
-      $(document).on('click', '.fixed-plugin-close-button2', function(){
-          var fixedPlugin = document.querySelector('.fixed-plugin2');
-              fixedPlugin.classList.remove('show');
-      });
       
-
-      var request_id = null;
-      $(document).on('click', '.msg', function(){
-            var fixedPlugin = document.querySelector('.fixed-plugin1');
-            var fixedPlugin1 = document.querySelector('.fixed-plugin');
-            var fixedPlugin2 = document.querySelector('.fixed-plugin2');
-
-            if (!fixedPlugin2.classList.contains('show')) {
-                fixedPlugin2.classList.add('show');
-                fixedPlugin1.classList.remove('show');
-                fixedPlugin.classList.remove('show');
-            } else {
-              fixedPlugin2.classList.remove('show');
-            }  
-
-          request_id = $(this).attr('id');
-          $('#warning_text').text('')
-          messages(request_id);
-      });
-
-      function messages(request_id){
-        $.ajax({
-                url :"/admin/message/"+request_id,
-                dataType:"json",
-                method:"get",
-                beforeSend:function(){
-
-                },
-                success:function(data){
-                  if(data.no_msg){
-                    var messages = '';
-                        messages += '<li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">';
-                          messages += '<div class="d-flex align-items-center">'
-                            messages += '<div class="d-flex flex-column">'
-                              messages += '<h6 class="mb-1 text-dark text-sm">'+data.no_msg+'</h6>'
-                            messages += '</div>'
-                          messages += '</div>'
-                        messages += '</li>'
-                        messages += '<hr>'
-                    $('#msg_section').empty().append(messages);
-                  }
-                  if(data.messages){
-                    var messages = '';
-                    $.each(data.messages, function(key,value){
-                        messages += '<li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">';
-                          messages += '<div class="d-flex align-items-center">'
-                            messages += '<div class="d-flex flex-column">'
-                              messages += '<h6 class="mb-1 text-dark text-sm">'+value.name+'</h6>'
-                              messages += '<p class="text-xs">'+value.msg+'</p>'
-                              messages += '<small class="text-xs">'+value.date_time+'</small>'
-                            messages += '</div>'
-                          messages += '</div>'
-                        messages += '</li>'
-                        messages += '<hr>'
-                    });
-                    $('#msg_section').empty().append(messages);
-                  }
-
-                  $('.title_head').text(data.resident +' - '+ data.document)
-                }
-        });
-      }
-
-      $('#myMsgForm').on('submit', function(event){
-        event.preventDefault();
-
-        $.ajax({
-            url :"/admin/message/"+request_id,
-            method:"POST",
-            data:$(this).serialize(),
-            dataType:"json",
-            beforeSend:function(){
-              $('#warning_text').text('SENDING..')
-            },
-            success:function(data){
-              if(data.success){
-                $('#warning_text').text('SENT')
-                $('#message').val('');
-                messages(request_id)
-              }
-            }
-        });
-      });
   })
 </script>
 

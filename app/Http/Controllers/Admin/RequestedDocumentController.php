@@ -13,6 +13,8 @@ use Gate;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\ActivityLog;
+use App\Models\Resident;
+use App\Models\Document;
 
 
 
@@ -21,127 +23,78 @@ class RequestedDocumentController extends Controller
 
     public function index()
     {
-        abort_if(Gate::denies('staff_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $documents = RequestedDocument::where('isRemove', 0)->latest()->get();
-        return view('admin.manage_requested_documents',compact('documents'));
+        abort_if(Gate::denies('teacher_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $resident = Resident::where('isRemove', false)->orderBy('name' , 'asc')->first();
+        $document = Document::where('isAvailable', true)->orderBy('name' , 'asc')->first();
+        return redirect('/admin/request_document/'.$resident->id.'/'.$document->id.'/request');
     }
-
-    public function requested(RequestedDocument $requested){
-
-        if (request()->ajax()) {
-            return response()->json([
-                'status'                    => $requested->status,
-                'payment'                   => $requested->isPaid,
-                'resident'                  => $requested->resident->last_name.','.$requested->resident->first_name.'('.$requested->resident->middle_name .')', 
-                'document'                  => $requested->document->name,
-                'claiming_date'             => $requested->claiming_date,
-
-                
-                'requirement'               => $requested->document->requirements()->get(),
-                'uploaded_requirement'      => $requested->requirements()->get(),
-                'uploaded_receipt'          => $requested->receipt,
-                
-                'claimed_option'            => $requested->claiming_option,
-
-                'amount_to_pay'             => $requested->amount_to_pay,
-                'downloadable'              => $requested->downloadable,
-
-            ]);
-        }
-        
+    public function index_request(Resident $resident, Document $document, $request_id)
+    {
+        abort_if(Gate::denies('teacher_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $request = RequestedDocument::where('id', $request_id)->first();
+        $residents = Resident::where('isRemove', false)->orderBy('name' , 'asc')->get();
+        $documents = Document::where('isAvailable', true)->orderBy('name' , 'asc')->get();
+        return view('admin.request_document.request_document',compact('resident','document','request','residents','documents'));
     }
-
-    public function update_requested(Request $request, RequestedDocument $requested){
-        date_default_timezone_set('Asia/Manila');
-        $validated =  Validator::make($request->all(), [
-           'claiming_date'  =>  ['required', 'date' , 'after:today'],
-
-        ]);
-
-        if ($validated->fails()) {
-            return response()->json(['errors' => $validated->errors()]);
-        }
-        if($requested->isPaid == 0){
-            if($request->input('payment') == 1){
-                $emailContent = [
-                    'notif'       => 'Your payment has been received',
-                    'msg'         => 'request_paid',
-                ];
-        
-                Mail::to($requested->resident->user->email)
-                        ->send(new Notification($emailContent));
-            }
-        }
-
-        if($requested->status != 'APPROVED'){
-            if($request->input('status') == 'APPROVED'){
-                $emailContent = [
-                    'notif'          => 'Your requested document has been approved',
-                    'msg'            => 'request_approved',
-                    'request_number' => $requested->request_number,
-                    'document'       => $requested->document->name,
-                    'claiming_date'  => Carbon::createFromFormat('Y-m-d',$requested->claiming_date)->format('M j , Y'),
-                    
-                ];
-        
-                Mail::to($requested->resident->user->email)
-                        ->send(new Notification($emailContent));
-            }
-        }
-        
-        if($requested->status != 'COMPLETED'){
-            if($request->input('status') == 'COMPLETED'){
-                $emailContent = [
-                    'notif'       => 'Your requested document has been completed',
-                    'msg'         => 'request_completed',
-                    
-                ];
-        
-                Mail::to($requested->resident->user->email)
-                        ->send(new Notification($emailContent));
-            }
-        }
-
-        
-        if($requested->status != 'DECLINED'){
-            if($request->input('status') == 'DECLINED'){
-                $emailContent = [
-                    'notif'       => 'Your requested document has been declined',
-                    'msg'         => 'request_declined',
-                ];
-        
-                Mail::to($requested->resident->user->email)
-                        ->send(new Notification($emailContent));
-            }
-        }
-
-        if ($request->file('downloadable_file')) {
-            File::delete(public_path('resident/downloadable_file/'.$requested->downloadable));
-            $file = $request->file('downloadable_file');
-            $extension = $file->getClientOriginalExtension(); 
-            $file_name_to_save = $requested->document->name."_".$requested->resident->id.".".$extension;
-            $file->move('resident/downloadable_file/', $file_name_to_save);
-        }
-
-        $requested->update([
-            'status'         => $request->input('status'),
-            'isPaid'         => $request->input('payment'),
-            'claiming_date'  => $request->input('claiming_date'),
-            'downloadable'   => $file_name_to_save ?? $requested->downloadable,
-        ]);
-
-        ActivityLog::create([
-            'activity'  => 'Activity: Updated requested document <br>
-                            Request Number: '.$requested->request_number.
-                           '<br> Resident Name: '.$requested->resident->last_name.','.$requested->resident->first_name.
-                           '<br> Status: '.$requested->status.
-                           '<br> User: '. auth()->user()->name,
-                            
-        ]);
-      
-        return response()->json(['success' => 'Updated Successfully.']);
-
+    public function resident_info(Resident $resident)
+    {
+        return view('admin.request_document.resident_info',compact('resident'));
+    }
+    public function document_info(Document $document)
+    {
+        return view('admin.request_document.document_info',compact('document'));
     }
     
+
+    public function requesting_document(Request $request){
+        date_default_timezone_set('Asia/Manila');
+        $request_id = $request->input('request_id');
+        if($request_id == 'request'){
+            $request = RequestedDocument::create([
+                'user_id'       =>  auth()->user()->id,
+                'request_number'    =>  'BRGY'.substr(time(), 4).$request->input('resident_id'),
+                'resident_id'       =>  $request->input('resident_id'),
+                'document_id'       =>  $request->input('document_id'),
+                'amount_to_pay'     => $request->input('amount_to_pay'),
+                'claiming_date'     =>  $request->input('claiming_date'),
+                'remarks'           =>  $request->input('remarks'),
+            ]);
+
+            ActivityLog::create([
+                'activity'  => 'Activity: Requested Document<br>
+                                Request Number: '.$request->request_number.
+                               '<br> User: '. auth()->user()->name,
+            ]);
+
+            return response()->json(['success' => 'Document has been successfully requested.']);
+        }else{
+            RequestedDocument::where('id', $request_id)->update([
+                'user_id'       =>  auth()->user()->id,
+                'resident_id'       =>  $request->input('resident_id'),
+                'document_id'       =>  $request->input('document_id'),
+                'amount_to_pay'     => $request->input('amount_to_pay'),
+                'claiming_date'     =>  $request->input('claiming_date'),
+                'remarks'           =>  $request->input('remarks'),
+            ]);
+            $request1 = RequestedDocument::where('id', $request_id)->first();
+
+            ActivityLog::create([
+                'activity'  => 'Activity: Updated Requested Document<br>
+                                Request Number: '.$request1->request_number.
+                               '<br> User: '. auth()->user()->name,
+            ]);
+            return response()->json(['success' => 'Document has been successfully updated.']);
+        }
+      
+        
+
+    }
+
+    public function requested_document()
+    {
+        abort_if(Gate::denies('teacher_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $documents = RequestedDocument::where('isRemove', false)->latest()->get();
+        return view('admin.manage_requested_documents',compact('documents'));
+    }
     
 }

@@ -14,13 +14,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DashboardController extends Controller
 {
+    public function face()
+    {
+
+        return view('face_recognition');
+    }
+
     public function index()
     {
-        abort_if(Gate::denies('staff_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('teacher_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documents = Document::where('isAvailable', true)->orderBy('name', 'asc')->get();
-        $pendings =  RequestedDocument::where('status', 'PENDING')->latest()->get();
-        $residents = Resident::where('status', "APPROVED")->where('isRegister', 1)->get();
+        $requests_total =  RequestedDocument::get();
+        $requests =  RequestedDocument::latest()->paginate(5);
+        $residents = Resident::orderBy('name','asc')->where('isRemove', false)->get();
         $staffs = RoleUser::where('role_id', 2)->orderBy('user_id', 'desc')->get();
-        return view('admin.dashboard' , compact('documents','pendings','residents','staffs'));
+
+        return view('admin.dashboard' , compact('documents','requests','residents','staffs','requests_total'));
     }
 }

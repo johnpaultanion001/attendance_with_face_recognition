@@ -47,9 +47,6 @@ class LoginController extends Controller
         if(auth()->user()->roles()->pluck('id')->implode(', ') == '2'){
             return route('admin.dashboard');
         }
-        if(auth()->user()->roles()->pluck('id')->implode(', ') == '3'){
-            return route('resident.request_document.index');
-        }
     }
 
      

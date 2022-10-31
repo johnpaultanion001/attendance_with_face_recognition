@@ -11,20 +11,19 @@ class RequestedDocument extends Model
     
     protected $fillable = [
         'request_number',
+        'user_id',
         'resident_id',
         'document_id',
         'claiming_date',
         'amount_to_pay',
-        'receipt',
-        'claiming_option',
-        'downloadable',
-        
-        'note',
-        'status',
-        'isPaid',
+        'remarks',
+
         'isRemove',
     ];
-
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
     public function resident()
     {
         return $this->belongsTo(Resident::class, 'resident_id');
@@ -32,13 +31,5 @@ class RequestedDocument extends Model
     public function document()
     {
         return $this->belongsTo(Document::class, 'document_id');
-    }
-    public function requirements()
-    {
-        return $this->hasMany(RequestedDocumentRequirement::class, 'requested_document_id' , 'id')->orderBy('name', 'asc');
-    }
-    public function messages()
-    {
-        return $this->hasMany(Message::class, 'requested_document_id' , 'id')->latest();
     }
 }

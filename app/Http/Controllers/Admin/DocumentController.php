@@ -16,7 +16,7 @@ class DocumentController extends Controller
    
     public function index()
     {
-        abort_if(Gate::denies('staff_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('teacher_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documents = Document::orderBy('name', 'asc')->get();
         return view('admin.manage_documents', compact('documents'));
     }

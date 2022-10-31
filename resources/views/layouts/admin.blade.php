@@ -154,14 +154,6 @@
                 }
                 },
                 {
-                extend: 'pdf',
-                className: 'btn-primary btn-sm mt-1 mb-1',
-                text: pdfButtonTrans,
-                exportOptions: {
-                    columns: ':visible'
-                }
-                },
-                {
                     extend: 'print',
                     className: 'btn-primary btn-sm mt-1 mb-1',
                     titleAttr: 'Click this print',

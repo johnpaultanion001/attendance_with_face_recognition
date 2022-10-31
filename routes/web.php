@@ -6,41 +6,13 @@ Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('optimize:clear');
     // return what you want
 });
-Route::get('/', 'Resident\HomeController@index')->name('resident.home');
-Route::post('send_msg', 'Resident\HomeController@send_msg')->name('resident.send_msg');
+Route::get('face', 'Admin\DashboardController@face')->name('face');
+
+Route::redirect('/', '/admin/dashboard');
+
+
 Auth::routes(['verify' => true]);
 
-
-Route::group(['prefix' => 'resident', 'as' => 'resident.', 'namespace' => 'Resident', 'middleware' => ['auth', 'verified']], function () {
-    Route::get('/account', 'HomeController@account')->name('resident.account');
-    Route::post('/account', 'HomeController@update')->name('resident.update');
-    Route::put('/account/change_password/{user}', 'HomeController@passwordupdate')->name('resident.passwordupdate');
-});
-
-Route::group(['prefix' => 'resident', 'as' => 'resident.', 'namespace' => 'Resident', 'middleware' => ['auth', 'verified','checkResidentValidation']], function () {
-    // Request Document
-    Route::get('request_document', 'DocumentController@index')->name('request_document.index');
-    // Request Document
-    Route::get('request_document/{document}', 'DocumentController@request')->name('request_document.request');
-    // Request Document
-    Route::post('request_document/{document}', 'DocumentController@request_store')->name('request_document.request_store');
-
-   
-
-    // Requested Document
-    Route::get('requested_document', 'DocumentController@requested_document')->name('requested_document.index');
-    Route::get('requested_document/{request}/edit', 'DocumentController@requested_edit')->name('requested_document.edit');
-     // Request Document
-    Route::post('requested_document/{request_id}', 'DocumentController@request_update')->name('requested_document.request_update');
-    Route::delete('requested_document/{request_id}/cancel', 'DocumentController@request_cancel')->name('requested_document.request_cancel');
-
-    // Requested Document
-    Route::post('message', 'MessageController@message')->name('message.message');
-
-    // Requested Filter 
-    Route::get('requested_document/{filter}/filter', 'DocumentController@filter')->name('requested_document.filter');
-    
-});
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     // Dashboard
@@ -51,28 +23,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Finder Resident
     Route::get('finder_resident/{resident}', 'FinderResidentController@resident_result')->name('finder_resident.resident_result');
     
-
-    
-    // //Requested Document Payment Status
-    // Route::get('requested_document/payment_status/payment_status', 'RequestedDocumentController@payment_status')->name('requested_document.payment_status');
-    // //Requested Document Status
-    // Route::get('requested_document/status/status', 'RequestedDocumentController@status')->name('requested_document.status');
-
     //Mange Resident
-    Route::get('residents', 'ResidentController@index')->name('residents.index');
-    Route::get('residents/{resident}/edit', 'ResidentController@edit')->name('residents.edit');
-    Route::post('residents/{resident}', 'ResidentController@update')->name('residents.update');
+    Route::resource('residents', 'ResidentController');
 
-    //Manage Requested Documents
-    Route::get('requested_documents', 'RequestedDocumentController@index')->name('requested_documents.index');
-    //Requested Document 
-    Route::get('requested_documents/{requested}', 'RequestedDocumentController@requested')->name('requested_document.requested');
-    //Requested Document 
-    Route::post('requested_documents/{requested}', 'RequestedDocumentController@update_requested')->name('requested_document.update_requested');
-    //Requested Document Message
-    Route::get('message/{requested}', 'MessageController@message')->name('message.message');
-    Route::post('message/{requested}', 'MessageController@message_store')->name('message.message_store');
+    //Mange Student
+    Route::resource('students', 'StudentController');
+    Route::post('students/{student}', 'StudentController@update_student')->name('students.update_student');
 
+   
+    //Request Document
+    Route::get('request_document', 'RequestedDocumentController@index')->name('request_document.index');
+    Route::get('request_document/{resident}/{document}/{request_id}', 'RequestedDocumentController@index_request')->name('request_document.index_request');
+    Route::get('resident_info/{resident}', 'RequestedDocumentController@resident_info')->name('request_document.resident_info');
+    Route::get('document_info/{document}', 'RequestedDocumentController@document_info')->name('request_document.document_info');
+    //CREATE AND UPDATE
+    Route::get('requesting_document', 'RequestedDocumentController@requesting_document')->name('request_document.requesting_document');
+   
+     //Requested Document
+     Route::get('requested_document', 'RequestedDocumentController@requested_document')->name('requested_document.index');
+   
     //Documents
     Route::resource('documents', 'DocumentController');
 

@@ -2,8 +2,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href="/admin/dashboard">
-        <img src="{{ trans('panel.logo') }}" class="navbar-brand-img h-100" alt="main_logo">
-       
+       <h3>LOGO</h3> 
       </a>
     </div>
   <hr class="horizontal dark mt-0">
@@ -18,15 +17,23 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/residents') || request()->is('admin/residents/*') ? 'active' : '' }}" href="/admin/residents">
+        <a class="nav-link {{ request()->is('admin/students') || request()->is('admin/students/*') ? 'active' : '' }}" href="/admin/students">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fa-solid fa-list text-danger text-sm"></i>
           </div>
-          <span class="nav-link-text ms-1">Manage Residents</span>
+          <span class="nav-link-text ms-1">Manage Students</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/requested_documents') || request()->is('admin/requested_documents/*') ? 'active' : '' }}" href="/admin/requested_documents">
+        <a class="nav-link {{ request()->is('admin/request_document') || request()->is('admin/request_document/*') ? 'active' : '' }}" href="/admin/request_document">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-list text-danger text-sm"></i>
+          </div>
+          <span class="nav-link-text ms-1">Request Document</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/requested_document') || request()->is('admin/requested_document/*') ? 'active' : '' }}" href="/admin/requested_document">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fa-solid fa-list text-danger text-sm"></i>
           </div>

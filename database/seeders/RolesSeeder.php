@@ -16,11 +16,7 @@ class RolesSeeder extends Seeder
             ],
             [
                 'id'    => 2,
-                'title' => 'Staff',
-            ],
-            [
-                'id'    => 3,
-                'title' => 'Resident',
+                'title' => 'Teacher',
             ],
         ];
 

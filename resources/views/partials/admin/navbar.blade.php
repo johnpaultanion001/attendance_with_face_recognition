@@ -10,8 +10,10 @@
           Dashboard
         @elseif(request()->is('admin/residents'))
           Manage Residents
-        @elseif(request()->is('admin/requested_documents'))
-          Manage Requested Docuement
+        @elseif(request()->is('admin/request_document/*'))
+          Request Docuement
+        @elseif(request()->is('admin/requested_document'))
+          Requested Docuement
         @elseif(request()->is('admin/finder_resident/*'))
           Resident Finder
         @elseif(request()->is('admin/finder_resident/*'))

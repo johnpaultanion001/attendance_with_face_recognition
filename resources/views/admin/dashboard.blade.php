@@ -14,50 +14,135 @@
 <div class="container-fluid py-4">
       <div class="row">
        
+       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Requested</p>
+                    <h5 class="font-weight-bolder">
+                     {{$requests_total->count()}}
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                    <i class="ni ni-bullet-list-67 text-sm opacity-10"></i>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
             <div class="card-body p-3">
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Active Residents</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Documents</p>
+                    <h5 class="font-weight-bolder">
+                     {{$documents->count()}}
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow-danger text-center rounded-circle">
+                    <i class="fa-solid fa-file-lines opacity-10"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">GENDER</p>
+                    <h5 class="font-weight-bolder">
+                    <i class="fa-solid fa-person text-primary"></i> {{$residents->where('gender','MALE')->count()}}
+                    <i class="fa-solid fa-person-dress text-danger"></i> {{$residents->where('gender','FEMALE')->count()}}
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-warning shadow-danger text-center rounded-circle">
+                    <i class="fa-solid fa-venus-mars text-sm opacity-10"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">VOTERS</p>
+                    <h5 class="font-weight-bolder">
+                    <i class="fa-solid fa-check-to-slot text-success"></i> {{$residents->where('isVoter',true)->count()}}
+                    <i class="fa-solid fa-check-to-slot text-info"></i> {{$residents->where('isVoter',false)->count()}}
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-danger shadow-danger text-center rounded-circle">
+                    <i class="fa-solid fa-check-to-slot text-sm opacity-10"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4 mt-2">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Residents</p>
                     <h5 class="font-weight-bolder">
                      {{$residents->count()}}
                     </h5>
                   </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                    <i class="ni ni-single-02 text-sm opacity-10"></i>
+                  <div class="icon icon-shape bg-success shadow-danger text-center rounded-circle">
+                    <i class="fa-solid fa-users text-sm opacity-10"></i>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        @can('admin_access')
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4 mt-2">
           <div class="card">
             <div class="card-body p-3">
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Active Staffs</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Staffs</p>
                     <h5 class="font-weight-bolder">
                       {{$staffs->count()}}
                     </h5>
                   </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                  <div class="icon icon-shape bg-default shadow-danger text-center rounded-circle">
+                    <i class="fa-solid fa-users text-lg opacity-10" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        @endcan
       
       </div>
       <div class="row mt-4">
@@ -65,13 +150,13 @@
           <div class="card ">
             <div class="card-header pb-0 p-3">
               <div class="d-flex justify-content-between">
-                <h6 class="mb-2">PENDING REQUESTED DOCUMENTS</h6>
+                <h6 class="mb-2">LAST 5 MAKE A REQUEST</h6>
               </div>
             </div>
             <div class="table-responsive">
               <table class="table align-items-center ">
                 <tbody>
-                  @forelse($pendings as $pending)
+                  @forelse($requests as $request)
                   <tr>
                     <td class="w-30">
                       <div class="d-flex px-2 py-1 align-items-center">
@@ -81,9 +166,7 @@
                         <div class="ms-4">
                           <p class="text-xs font-weight-bold mb-0">Resident:</p>
                           <h6 class="text-sm mb-0 text-uppercase">
-                            {{$pending->resident->last_name ?? ''}} ,
-                            {{$pending->resident->first_name ?? ''}}
-                            ({{$pending->resident->middle_name ?? ''}})
+                            {{$request->resident->name ?? ''}}
 
                           </h6>
                         </div>
@@ -91,17 +174,11 @@
                     </td>
                     <td>
                         <p class="text-xs font-weight-bold mb-0">Document:</p>
-                        <h6 class="text-sm mb-0 text-uppercase">{{$pending->document->name ?? ''}}</h6>
-                     
-                    </td>
-                    <td>
-                        <p class="text-xs font-weight-bold mb-0">Claiming Option:</p>
-                        <h6 class="text-sm mb-0 text-uppercase">{{$pending->claiming_option ?? ''}}</h6>
-                     
+                        <h6 class="text-sm mb-0 text-uppercase">{{$request->document->name ?? ''}}</h6>
                     </td>
                     <td class="align-middle text-sm">
                         <div class="d-flex">
-                          <a href="/admin/finder_resident/{{$pending->resident->id}}" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></a>
+                          <a href="/admin/finder_resident/{{$request->resident->id}}" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></a>
                         </div>
                     </td>
                   </tr>

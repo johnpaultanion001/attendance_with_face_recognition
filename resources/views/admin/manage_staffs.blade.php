@@ -233,7 +233,6 @@
       var id = $('#id').val();
           url = "/admin/account/" + id;
           method = "PUT";
-
     }
     $.ajax({
         url: url,
@@ -278,59 +277,59 @@
 
   $(document).on('click', '.remove', function(){
   var id = $(this).attr('id');
-  $.confirm({
-      title: 'Confirmation',
-      content: 'You really want to remove this record?',
-      type: 'red',
-      buttons: {
-          confirm: {
-              text: 'confirm',
-              btnClass: 'btn-blue',
-              keys: ['enter', 'shift'],
-              action: function(){
-                  return $.ajax({
-                      url:"/admin/account/"+id,
-                      method:'DELETE',
-                      data: {
-                          _token: '{!! csrf_token() !!}',
-                      },
-                      dataType:"json",
-                      beforeSend:function(){
-                        $(".remove").attr("disabled", true);
-                      },
-                      success:function(data){
-                        $(".remove").attr("disabled", false);
-                        
-                          if(data.success){
-                            $.confirm({
-                              title: 'Confirmation',
-                              content: data.success,
-                              type: 'green',
-                              buttons: {
-                                      confirm: {
-                                          text: 'confirm',
-                                          btnClass: 'btn-blue',
-                                          keys: ['enter', 'shift'],
-                                          action: function(){
-                                              location.reload();
-                                          }
-                                      },
-                                      
-                                  }
-                              });
-                          }
-                      }
-                  })
-              }
-          },
-          cancel:  {
-              text: 'cancel',
-              btnClass: 'btn-red',
-              keys: ['enter', 'shift'],
-          }
-      }
+    $.confirm({
+        title: 'Confirmation',
+        content: 'You really want to remove this record?',
+        type: 'red',
+        buttons: {
+            confirm: {
+                text: 'confirm',
+                btnClass: 'btn-blue',
+                keys: ['enter', 'shift'],
+                action: function(){
+                    return $.ajax({
+                        url:"/admin/account/"+id,
+                        method:'DELETE',
+                        data: {
+                            _token: '{!! csrf_token() !!}',
+                        },
+                        dataType:"json",
+                        beforeSend:function(){
+                          $(".remove").attr("disabled", true);
+                        },
+                        success:function(data){
+                          $(".remove").attr("disabled", false);
+                          
+                            if(data.success){
+                              $.confirm({
+                                title: 'Confirmation',
+                                content: data.success,
+                                type: 'green',
+                                buttons: {
+                                        confirm: {
+                                            text: 'confirm',
+                                            btnClass: 'btn-blue',
+                                            keys: ['enter', 'shift'],
+                                            action: function(){
+                                                location.reload();
+                                            }
+                                        },
+                                        
+                                    }
+                                });
+                            }
+                        }
+                    })
+                }
+            },
+            cancel:  {
+                text: 'cancel',
+                btnClass: 'btn-red',
+                keys: ['enter', 'shift'],
+            }
+        }
+    });
   });
-});
 </script>
 
 
