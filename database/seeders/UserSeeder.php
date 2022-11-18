@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Student;
 
 class UserSeeder extends Seeder
 {
@@ -67,6 +68,26 @@ class UserSeeder extends Seeder
             ],
         ];
 
+        $students = [
+            // students
+            [
+                'id'                          => '1',
+                'user_id'                     => '1',
+                'student_folder'              => 'Tony Stark_739674',
+                'name'                        => 'Tony Stark',
+                'age'                         => '22',
+                'address'                     => 'test',
+                'grade'                       => 'test',
+                'section'                     => 'test',
+                'schedule'                    => 'test',
+                'image1'                      => 'Tony Stark_739674/1.jpg',
+                'image2'                      => 'Tony Stark_739674/2.jpg',
+                'created_at'                  => date("Y-m-d H:i:s"),
+                'updated_at'                  => date("Y-m-d H:i:s"),
+            ],
+        ];
+
         User::insert($users);
+        Student::insert($students);
     }
 }

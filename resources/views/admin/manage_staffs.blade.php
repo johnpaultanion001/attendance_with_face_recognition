@@ -17,11 +17,11 @@
           <div class="card-header pb-0">
             <div class="row">
               <div class="col-md-10">
-                  <h6>MANAGE STAFFS</h6>
+                  <h6>MANAGE TEACHERS</h6>
               </div>
               <div class="col-md-2">
                   <button class="btn btn-dark btn-sm" id="create_record">
-                    ADD NEW STAFF
+                    ADD NEW TEACHER
                   </button>
               </div>
             </div>
@@ -117,7 +117,7 @@
       </div>
       <br>
       <div class="float-start">
-        <h6 class="text-uppercase">STAFF INFORMATION</h6>
+        <h6 class="text-uppercase">TEACHER INFORMATION</h6>
       </div>
       <!-- End Toggle Button -->
     </div>

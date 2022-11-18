@@ -8,24 +8,18 @@
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">
         @if(request()->is('admin/dashboard'))
           Dashboard
-        @elseif(request()->is('admin/residents'))
-          Manage Residents
-        @elseif(request()->is('admin/request_document/*'))
-          Request Docuement
-        @elseif(request()->is('admin/requested_document'))
-          Requested Docuement
-        @elseif(request()->is('admin/finder_resident/*'))
-          Resident Finder
-        @elseif(request()->is('admin/finder_resident/*'))
-          Resident Finder
-        @elseif(request()->is('admin/documents'))
-          Manage Documents
+        @elseif(request()->is('admin/students'))
+          Manage Students
+        @elseif(request()->is('admin/attendance'))
+          Manage Attendance
+        @elseif(request()->is('admin/finder_student/*'))
+          Student Finder
+        @elseif(request()->is('admin/attendance_records/*'))
+          Attendance Records
         @elseif(request()->is('admin/admins'))
           Manage Administrator
         @elseif(request()->is('admin/staffs'))
           Manage Staffs
-        @elseif(request()->is('admin/activity_logs'))
-          Activity Logs
         @endif 
         </li>
       </ol>

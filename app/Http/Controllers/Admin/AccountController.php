@@ -59,12 +59,7 @@ class AccountController extends Controller
             'user_id' => $account->id,
             'role_id' => $request->input('role'),
         ]);
-        ActivityLog::create([
-            'activity'  => 'Activity: Create newly admin <br>
-                            Admin Name: '.$account->name.
-                            '<br> User: '. auth()->user()->name,
-                            
-        ]);
+    
 
         return response()->json(['success' => 'Successfully created.']);
     }
@@ -89,25 +84,13 @@ class AccountController extends Controller
             'password'              => Hash::make($request->input('password')),
         ]);
 
-        ActivityLog::create([
-            'activity'  => 'Activity: Updated staff account <br>
-                            Staff Name: '.$account->name.
-                            '<br> User: '. auth()->user()->name,
-                            
-        ]);
-
+       
         return response()->json(['success' => 'Successfully updated.']);
     }
 
     public function destroy(User $account){
         date_default_timezone_set('Asia/Manila');
-        ActivityLog::create([
-            'activity'  => 'Activity: Removed staff account <br>
-                            Staff Name: '.$account->name.
-                            '<br> User: '. auth()->user()->name,
-                            
-        ]);
-
+       
         RoleUser::where('user_id', $account->id)->delete();
         $account->delete();
         return response()->json(['success' => 'Successfully removed.']);

@@ -25,35 +25,27 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/request_document') || request()->is('admin/request_document/*') ? 'active' : '' }}" href="/admin/request_document">
+        <a class="nav-link {{ request()->is('admin/attendance') || request()->is('admin/attendance/*') ? 'active' : '' }}" href="/admin/attendance">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fa-solid fa-list text-danger text-sm"></i>
           </div>
-          <span class="nav-link-text ms-1">Request Document</span>
+          <span class="nav-link-text ms-1">Manage Attendance</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/requested_document') || request()->is('admin/requested_document/*') ? 'active' : '' }}" href="/admin/requested_document">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="fa-solid fa-list text-danger text-sm"></i>
-          </div>
-          <span class="nav-link-text ms-1">Requested Document</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/finder_resident') || request()->is('admin/finder_resident/*') ? 'active' : '' }}" href="/admin/finder_resident">
+        <a class="nav-link {{ request()->is('admin/finder_student') || request()->is('admin/finder_student/*') ? 'active' : '' }}" href="/admin/finder_student">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fa-solid fa-magnifying-glass text-danger  text-sm"></i>
           </div>
-          <span class="nav-link-text  ms-1">Resident Finder</span>
+          <span class="nav-link-text  ms-1">Student Finder</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/documents') || request()->is('admin/documents/*') ? 'active' : '' }}" href="/admin/documents">
+        <a class="nav-link {{ request()->is('admin/attendance_records') || request()->is('admin/attendance_records/*') ? 'active' : '' }}" href="/admin/attendance_records/daily">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fa-solid fa-list text-danger text-sm"></i>
           </div>
-          <span class="nav-link-text  ms-1">Manage Documents</span>
+          <span class="nav-link-text  ms-1">Attendance Records</span>
         </a>
       </li>
       @can('admin_access')
@@ -73,15 +65,7 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Staffs</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('admin/activity_logs') ? 'active' : '' }}" href="/admin/activity_logs">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-collection text-info text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Activity logs</span>
+            <span class="nav-link-text ms-1">Teachers</span>
           </a>
         </li>
       @endcan
