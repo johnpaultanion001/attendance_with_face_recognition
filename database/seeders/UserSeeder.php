@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\Subject;
+use App\Models\SubjectTeacherStudent;
 
 class UserSeeder extends Seeder
 {
@@ -87,7 +89,68 @@ class UserSeeder extends Seeder
             ],
         ];
 
+
+        $subjects = [
+            [
+                'subject_code'                          => 'FIL01',
+                'subject_title'                          => 'FILIPINO',
+                
+                'created_at'                  => date("Y-m-d H:i:s"),
+                'updated_at'                  => date("Y-m-d H:i:s"),
+            ],
+            [
+                'subject_code'                          => 'ENG01',
+                'subject_title'                          => 'ENGLISH',
+                
+                'created_at'                  => date("Y-m-d H:i:s"),
+                'updated_at'                  => date("Y-m-d H:i:s"),
+            ],
+            [
+                'subject_code'                          => 'MTH01',
+                'subject_title'                          => 'MATH',
+                
+                'created_at'                  => date("Y-m-d H:i:s"),
+                'updated_at'                  => date("Y-m-d H:i:s"),
+            ],
+            [
+                'subject_code'                          => 'JAVA01',
+                'subject_title'                          => 'JAVA',
+                
+                'created_at'                  => date("Y-m-d H:i:s"),
+                'updated_at'                  => date("Y-m-d H:i:s"),
+            ],
+        ];
+
+        $subjectTeacherStudent = [
+            [
+                'subject_id'                          => '1',
+                'student_id'                          => '1',
+                'teacher_id'                          => '4',
+                
+                'created_at'                  => date("Y-m-d H:i:s"),
+                'updated_at'                  => date("Y-m-d H:i:s"),
+            ],
+            [
+                'subject_id'                          => '2',
+                'student_id'                          => '1',
+                'teacher_id'                          => '4',
+                
+                'created_at'                  => date("Y-m-d H:i:s"),
+                'updated_at'                  => date("Y-m-d H:i:s"),
+            ],
+            [
+                'subject_id'                          => '3',
+                'student_id'                          => '1',
+                'teacher_id'                          => '4',
+                
+                'created_at'                  => date("Y-m-d H:i:s"),
+                'updated_at'                  => date("Y-m-d H:i:s"),
+            ],
+        ];
+
         User::insert($users);
         Student::insert($students);
+        Subject::insert($subjects);
+        SubjectTeacherStudent::insert($subjectTeacherStudent);
     }
 }

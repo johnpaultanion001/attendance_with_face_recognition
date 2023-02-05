@@ -73,7 +73,7 @@
                     <td class="w-30">
                       <div class="d-flex px-2 py-1 align-items-center">
                         <div class="icon icon-shape icon-sm me-3 bg-warning shadow text-center">
-                          <img src="/face_recognition/labeled_images/{{$attendance->student->image1}}"  width="50" height="50" alt="no_image">
+                          <img src="/face_recognition/labeled_images/{{$attendance->student->image1 ?? ''}}"  width="50" height="50" alt="no_image">
                         </div>
                         <div class="ms-4">
                           <p class="text-xs font-weight-bold mb-0">Student:</p>

@@ -16,6 +16,17 @@
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
       </li>
+      @can('teacher_access')
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/teacher/students') || request()->is('admin/teacher/students/*') ? 'active' : '' }}" href="/admin/teacher/students">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-list text-danger text-sm"></i>
+          </div>
+          <span class="nav-link-text ms-1">Your Students</span>
+        </a>
+      </li>
+      @endcan
+      @can('admin_access')
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/students') || request()->is('admin/students/*') ? 'active' : '' }}" href="/admin/students">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -24,6 +35,7 @@
           <span class="nav-link-text ms-1">Manage Students</span>
         </a>
       </li>
+      @endcan
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/attendance') || request()->is('admin/attendance/*') ? 'active' : '' }}" href="/admin/attendance">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -32,6 +44,7 @@
           <span class="nav-link-text ms-1">Manage Attendance</span>
         </a>
       </li>
+      
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/finder_student') || request()->is('admin/finder_student/*') ? 'active' : '' }}" href="/admin/finder_student">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -61,7 +74,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('admin/staffs') ? 'active' : '' }}" href="/admin/staffs">
+          <a class="nav-link {{ request()->is('admin/staffs') || request()->is('admin/staffs/*') ? 'active' : '' }}" href="/admin/staffs">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
             </div>

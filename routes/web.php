@@ -45,6 +45,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('account/{account}/edit', 'AccountController@edit')->name('account.edit');
     Route::put('account/{account}', 'AccountController@update')->name('account.update');
     Route::delete('account/{account}', 'AccountController@destroy')->name('account.destroy');
+
+
+    Route::get('staffs/assign/{teacher}', 'AssignController@assign')->name('teacher.assign');
+    Route::get('staffs/assign', 'AssignController@store_update')->name('teacher.store_update');
+    Route::get('staffs/assign/{id}/edit', 'AssignController@edit')->name('teacher.edit');
+    Route::delete('staffs/assign/{id}/delete', 'AssignController@destroy')->name('teacher.destroy');
+
+
+    Route::get('teacher/students', 'TeacherController@students')->name('teacher.students');
     
     
 });

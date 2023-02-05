@@ -1,5 +1,5 @@
 @extends('../layouts.admin')
-@section('sub-title','MANAGE STAFFS')
+@section('sub-title','ASSIGN SUBJECT AND STUDENT')
 
 @section('sidebar')
     @include('../partials.admin.sidebar')
@@ -17,42 +17,46 @@
           <div class="card-header pb-0">
             <div class="row">
               <div class="col-md-10">
-                  <h6>MANAGE TEACHERS</h6>
+                  <h6>ASSIGN SUBJECT AND STUDENT</h6>
               </div>
               <div class="col-md-2">
+              <div class="form-group">
+                      <label class="control-label text-uppercase" >Filter by Subject <span class="text-danger">*</span></label>
+                      <select name="filter_subject" id="filter_subject" class="form-control">
+                          @foreach($subjects as $subject)
+                              <option value="{{$subject->subject_title}}">{{$subject->subject_title ?? ''}}</option>
+                          @endforeach
+                      </select>
+                    </div>
+                    <br>
                   <button class="btn btn-dark btn-sm" id="create_record">
-                    ADD NEW TEACHER
+                    ASSIGN
                   </button>
               </div>
+              
             </div>
           </div>
           <div class="card-body ">
-            <div class="table-responsive p-0">
+          <div class="table-responsive p-0">
               <table class="table align-items-center mb-0" style="width: 100%;">
                 <thead>
                   <tr>
                     <th class="text-secondary opacity-7"></th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Name</th>
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Email</th>
-                    
-                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Contact Number</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Subject</th>
+                    <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Student Name</th>
                     <th class="text-uppercase text-xxs text-dark font-weight-bolder opacity-7">Created At</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($staffs as $staff)
+                  @foreach($teacher->subjectsTeachersStudents()->get() as $teacherSubject)
                     <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <a href="staffs/assign/{{$staff->user->id}}"  class="btn btn-success btn-sm">
-                              ASSIGN SUBJECT
-                            </a>
-                           
-                            <button id="{{$staff->user->id}}" class="btn btn-primary btn-sm view" >
+                            <button id="{{$teacherSubject->id}}" class="btn btn-primary btn-sm view" >
                               VIEW/EDIT
                             </button>
-                            <button id="{{$staff->user->id}}" class="btn btn-danger btn-sm remove" >
+                            <button id="{{$teacherSubject->id}}" class="btn btn-danger btn-sm remove" >
                               REMOVE
                             </button>
                           </div>
@@ -62,7 +66,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$staff->user->name ?? ''}}</h6>
+                            <h6 class="mb-0 text-sm">{{$teacherSubject->subject->subject_title ?? ''}}</h6>
                          
                           </div>
                         </div>
@@ -70,7 +74,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$staff->user->email ?? ''}}</h6>
+                            <h6 class="mb-0 text-sm">{{$teacherSubject->student->name ?? ''}}</h6>
                          
                           </div>
                         </div>
@@ -79,15 +83,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$staff->user->contact_number ?? ''}}</h6>
-                         
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$staff->user->created_at->format('M j , Y h:i A') ?? ''}}</h6>
+                            <h6 class="mb-0 text-sm">{{$teacherSubject->created_at->format('M j , Y h:i A') ?? ''}}</h6>
                          
                           </div>
                         </div>
@@ -120,8 +116,9 @@
       </div>
       <br>
       <div class="float-start">
-        <h6 class="text-uppercase">TEACHER INFORMATION</h6>
+        <h6 class="text-uppercase">ASSIGN SUBJECT AND STUDENT</h6>
       </div>
+      
       <!-- End Toggle Button -->
     </div>
     <hr class="horizontal dark my-1">
@@ -130,37 +127,26 @@
             @csrf
             <div class="card-body">
                 <div class="form-group">
-                    <label class="control-label text-uppercase" >Name <span class="text-danger">*</span></label>
-                    <input type="text" name="name" id="name" class="form-control" />
-                    <span class="invalid-feedback" role="alert">
-                        <strong id="error-name"></strong>
-                    </span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label text-uppercase" >Email <span class="text-danger">*</span></label>
-                    <input type="email" name="email" id="email" class="form-control" />
-                    <span class="invalid-feedback" role="alert">
-                        <strong id="error-email"></strong>
-                    </span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label text-uppercase" >Contact Number <span class="text-danger">*</span></label>
-                    <input type="number" name="contact_number" id="contact_number" class="form-control" />
-                    <span class="invalid-feedback" role="alert">
-                        <strong id="error-contact_number"></strong>
-                    </span>
+                    <label class="control-label text-uppercase" >Subject <span class="text-danger">*</span></label>
+                    <select name="subject_id" id="subject_id" class="form-control">
+                        @foreach($subjects as $subject)
+                            <option value="{{$subject->id}}">{{$subject->subject_title ?? ''}}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label text-uppercase" >Password <span class="text-danger">*</span></label>
-                    <input type="password" name="password" id="password" class="form-control" />
-                    <span class="invalid-feedback" role="alert">
-                        <strong id="error-password"></strong>
-                    </span>
+                    <label class="control-label text-uppercase" >Student <span class="text-danger">*</span></label>
+                    <select name="student_id" id="student_id" class="form-control">
+                        @foreach($students as $student)
+                            <option value="{{$student->id}}">{{$student->name ?? ''}}</option>
+                        @endforeach
+                    </select>
                 </div>
+                
                 <input type="hidden" name="id" id="id"  />
                 <input type="hidden" name="action" id="action" value="ADD"  />
-                <input type="hidden" name="role" id="role" value="2"  />
+                <input type="hidden" name="teacher_id" id="teacher_id" value="{{$teacher->id}}"  />
 
                 <div class="card-footer text-center">
                     <input type="submit" name="action_button" id="action_button" class="text-uppercase btn-wd btn btn-primary" value="Submit" />
@@ -176,12 +162,17 @@
 @section('script')
 
 <script>
-  $(document).ready(function () {
-        $('.table').DataTable({
+    $(document).ready(function () {
+      var table =  $('.table').DataTable({
             'columnDefs': [{ 'orderable': false, 'targets': [0] }],
         });
+
+      $('#filter_subject').on("change", function(event){
+        table.columns(1).search( this.value ).draw();
+      });
   });
   
+
   $(document).on('click', '#create_record', function(){
       $('#name').focus();
       $('#action').val('ADD');
@@ -194,14 +185,54 @@
           fixedPlugin.classList.remove('show');
       }
   });
+   
+    $('#myForm').on('submit', function(event){
+    event.preventDefault();
+    $('.form-control').removeClass('is-invalid')
+    var url = "/admin/staffs/assign";
+    var method = "GET";
+
+   
+    $.ajax({
+        url: url,
+        method: method,
+        data: $(this).serialize(),
+        dataType:"json",
+        beforeSend:function(){
+            $("#action_button").attr("disabled", true);
+        },
+        success:function(data){
+            $("#action_button").attr("disabled", false);
+
+          
+           if(data.success){
+                $.confirm({
+                    title: data.success,
+                    content: "",
+                    type: 'green',
+                    buttons: {
+                        confirm: {
+                            text: '',
+                            btnClass: 'btn-green',
+                            keys: ['enter', 'shift'],
+                            action: function(){
+                                location.reload();
+                            }
+                        },
+                    }
+                });
+            }
+           
+        }
+    });
+  });
+
 
   $(document).on('click', '.view', function(){
       var id = $(this).attr('id');
-      $('#action').val('EDIT');
       $('#id').val(id);
-
       $.ajax({
-          url :"/admin/account/"+id+"/edit",
+          url :"/admin/staffs/assign/"+id+"/edit",
           dataType:"json",
           beforeSend:function(){
               $("#action_button").attr("disabled", true);
@@ -226,58 +257,6 @@
       }
   });
 
-  $('#myForm').on('submit', function(event){
-    event.preventDefault();
-    $('.form-control').removeClass('is-invalid')
-    var url = "/admin/account/store";
-    var method = "GET";
-
-    if($('#action').val() == 'EDIT'){
-      var id = $('#id').val();
-          url = "/admin/account/" + id;
-          method = "PUT";
-    }
-    $.ajax({
-        url: url,
-        method: method,
-        data: $(this).serialize(),
-        dataType:"json",
-        beforeSend:function(){
-            $("#action_button").attr("disabled", true);
-        },
-        success:function(data){
-            $("#action_button").attr("disabled", false);
-
-            if(data.errors){
-                $.each(data.errors, function(key,value){
-                    if(key == $('#'+key).attr('id')){
-                        $('#'+key).addClass('is-invalid')
-                        $('#error-'+key).text(value)
-                    }
-                })
-            }
-           if(data.success){
-                $.confirm({
-                    title: data.success,
-                    content: "",
-                    type: 'green',
-                    buttons: {
-                        confirm: {
-                            text: '',
-                            btnClass: 'btn-green',
-                            keys: ['enter', 'shift'],
-                            action: function(){
-                                location.reload();
-                            }
-                        },
-                    }
-                });
-            }
-           
-        }
-    });
-  });
-
   $(document).on('click', '.remove', function(){
   var id = $(this).attr('id');
     $.confirm({
@@ -291,7 +270,7 @@
                 keys: ['enter', 'shift'],
                 action: function(){
                     return $.ajax({
-                        url:"/admin/account/"+id,
+                        url:"/admin/staffs/assign/"+id+"/delete",
                         method:'DELETE',
                         data: {
                             _token: '{!! csrf_token() !!}',
@@ -333,6 +312,9 @@
         }
     });
   });
+  
+
+
 </script>
 
 

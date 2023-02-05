@@ -53,4 +53,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Resident::class, 'id', 'user_id');
     }
+
+    public function subjectsTeachersStudents()
+    {
+        return $this->hasMany(SubjectTeacherStudent::class, 'teacher_id');
+    }
+
 }
