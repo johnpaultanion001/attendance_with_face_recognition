@@ -16,8 +16,7 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('teacher_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        
         $students_data = Student::where('isRemove', false)->latest()->get();
         $student_data = [];
 

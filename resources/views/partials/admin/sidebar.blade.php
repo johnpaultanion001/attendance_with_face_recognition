@@ -35,6 +35,15 @@
           <span class="nav-link-text ms-1">Manage Students</span>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/subjects') || request()->is('admin/subjects/*') ? 'active' : '' }}" href="/admin/subjects">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-list text-danger text-sm"></i>
+          </div>
+          <span class="nav-link-text ms-1">Manage Subjects</span>
+        </a>
+      </li>
       @endcan
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/attendance') || request()->is('admin/attendance/*') ? 'active' : '' }}" href="/admin/attendance">

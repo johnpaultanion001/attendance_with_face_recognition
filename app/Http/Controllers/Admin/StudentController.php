@@ -14,8 +14,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('teacher_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $students = Student::orderBy('name' , 'asc')->where('isRemove', false)->get();
+          $students = Student::orderBy('name' , 'asc')->where('isRemove', false)->get();
         return view('admin.manage_students',compact('students'));
     }
     public function edit(Student $student)

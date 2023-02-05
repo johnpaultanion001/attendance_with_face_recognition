@@ -54,6 +54,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
     Route::get('teacher/students', 'TeacherController@students')->name('teacher.students');
+
+    //Manage SUBJECT
+    Route::resource('subjects', 'SubjectController');
     
     
 });

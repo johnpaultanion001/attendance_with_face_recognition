@@ -12,8 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FinderStudentController extends Controller
 {
     public function index(){
-        abort_if(Gate::denies('teacher_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $students = Student::where('isRemove', false)->orderBy('name' , 'asc')->first();
+          $students = Student::where('isRemove', false)->orderBy('name' , 'asc')->first();
         return redirect('/admin/finder_student/'.$students->id);
     }
     public function student_result(Student $student){

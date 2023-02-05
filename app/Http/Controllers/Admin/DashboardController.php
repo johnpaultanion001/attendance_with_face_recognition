@@ -16,8 +16,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('teacher_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-       
+        
         $students = Student::orderBy('name','asc')->where('isRemove', false)->get();
         $teachers = RoleUser::where('role_id', 2)->orderBy('user_id', 'desc')->get();
         $attendances = Attendance::latest()->whereDate('created_at', Carbon::today())->get();

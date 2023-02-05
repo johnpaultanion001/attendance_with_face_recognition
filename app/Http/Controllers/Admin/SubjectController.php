@@ -1,85 +1,83 @@
 <?php
+namespace App\Http\Controllers\Admin;
 
-namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Validator;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index()
     {
-        //
+        $subjects = Subject::where('isRemove', false)->orderBy('subject_code', 'asc')->get();
+        return view('admin.manage_subjects' , compact('subjects'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
-        //
+        $validated =  Validator::make($request->all(), [
+            'subject_code'           => ['required'],
+            'subject_title'           => ['required'],
+            
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json(['errors' => $validated->errors()]);
+        }
+
+        Subject::create([
+            'subject_code'                  => $request->input('subject_code'),
+            'subject_title'                 => $request->input('subject_title'),
+         
+        ]);
+      
+
+        return response()->json(['success' => 'Successfully created.']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Subject $subject)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(Subject $subject)
     {
-        //
+        if (request()->ajax()) {
+            return response()->json([
+                'result' =>  $subject,
+            ]);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, Subject $subject)
     {
-        //
+        $validated =  Validator::make($request->all(), [
+            'subject_code'           => ['required'],
+            'subject_title'           => ['required'],
+            
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json(['errors' => $validated->errors()]);
+        }
+
+        $subject->update([
+            'subject_code'                  => $request->input('subject_code'),
+            'subject_title'                 => $request->input('subject_title'),
+         
+        ]);
+      
+
+        return response()->json(['success' => 'Successfully updated.']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy(Subject $subject)
     {
-        //
+        $subject->update([
+            'isRemove' => true,
+        ]);
+        return response()->json(['success' => 'Successfully removed.']);
     }
 }
