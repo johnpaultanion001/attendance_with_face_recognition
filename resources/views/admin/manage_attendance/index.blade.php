@@ -27,10 +27,18 @@
 @section('content')
 <div class="container-fluid py-4">
   <div class="row mt-4">
+      
       <div class="col-lg-12">
+       
         <div class="card mb-4" >
           <div class="col-md-10 mx-auto" id="bodyScan">
             <video id="videoInput" width="720" height="550" muted controls>
+          </div>
+          <div class="col-md-6 mx-auto mt-2 p-2" style="border: 1px solid #111;">
+              <div class="form-group">
+                  <label for="start_time">START CLASS:</label>
+                <input type="time" class="form-control" id="start_time">
+              </div>
           </div>
           <div class="col-md-10 mx-auto text-center">
             <h6 id="loading_state"></h6>
@@ -81,6 +89,8 @@
 @section('script')
 <script src="{{ asset('/face_recognition/js/face-api.min.js') }}"></script>
 <script>
+        document.getElementById("start_time").defaultValue = "07:30";
+        
         const video = document.getElementById('videoInput')
 
         Promise.all([
@@ -101,8 +111,9 @@
             
             //video.src = '../videos/speech.mp4'
             console.log('video added')
-            recognizeFaces()
             attendance_record()
+            recognizeFaces()
+            
         }
 
         async function recognizeFaces() {
@@ -149,7 +160,7 @@
                 url:"/admin/attendance",
                 method:'POST',
                 data: {
-                    _token: '{!! csrf_token() !!}', student_folder: student_folder
+                    _token: '{!! csrf_token() !!}', student_folder: student_folder, start_time:$('#start_time').val(),
                 },
                 dataType:"json",
                 beforeSend:function(){
@@ -211,6 +222,9 @@
                                   <p class="text-xs font-weight-bold mb-0">Attended At:</p>
                                   <h6 class="text-sm mb-0 text-uppercase">
                                     `+value.date_time+`
+                                    <span class="`+value.status_color+`">
+                                      (`+value.status+` `+value.diff+` mins)
+                                    </span> 
                                   </h6>
                               </td>
                               <td class="align-middle text-sm">

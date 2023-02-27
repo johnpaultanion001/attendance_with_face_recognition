@@ -120,10 +120,35 @@
                           </div>
                         </div>
                       </td>
+                      @php
+                      $string_date = $attendance->start_time;
+                      $start = new DateTime($string_date);
+
+                      $to = $attendance->created_at;
+                      $from = $start;
+                      $diff = $to->diffInMinutes($from);
+
+                      if($from  < $to){
+                        $status = "LATE";
+
+                      }else{
+                        $status = "EARLY";
+                      }
+                      @endphp
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$attendance->created_at->format('M j , Y h:i A') ?? ''}}</h6>
+                            <h6 class="mb-0 text-sm">{{$attendance->created_at->format('M j , Y h:i A') ?? ''}} 
+                              @if($status == "LATE")
+                              <span class="text-danger">
+                                (Late {{$diff}} mins)
+                              </span>
+                              @else
+                              <span class="text-success">
+                                (Early {{$diff}} mins)
+                              </span>
+                              @endif
+                            </h6>
                          
                           </div>
                         </div>

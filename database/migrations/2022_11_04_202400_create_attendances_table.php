@@ -17,6 +17,7 @@ class CreateAttendancesTable extends Migration
             $table->id();
             $table->string('student_id')->nullable();
             $table->string('user_id')->nullable();
+            $table->string('start_time')->nullable();
             $table->timestamps();
         });
     }

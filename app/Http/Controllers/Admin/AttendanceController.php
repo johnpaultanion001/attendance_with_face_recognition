@@ -11,6 +11,7 @@ use App\Models\User;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
+use DateTime;
 
 class AttendanceController extends Controller
 {
@@ -34,12 +35,32 @@ class AttendanceController extends Controller
         $attendances_record = Attendance::latest()->where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->get();
 
         foreach($attendances_record as $attendance){
+            $string_date = $attendance->start_time;
+            $start = new DateTime($string_date);
+
+            $to = $attendance->created_at;
+            $from = $start;
+            $diff = $to->diffInMinutes($from);
+
+            if($from  < $to){
+                $status = "LATE";
+                $status_color = 'text-danger';
+            }else{
+                $status = "EARLY";
+                $status_color = 'text-success';
+            }
+            
+
             $attendances_data[] = array(
                 'id'        => $attendance->id, 
                 'image'          => '/face_recognition/labeled_images/'.$attendance->student->image1,
                 'student'        => $attendance->student->name ?? '', 
                 'attendance_by'        => $attendance->user->name ?? '', 
                 'date_time'        => $attendance->created_at->format('M j , Y h:i A'), 
+                'status'            => $status,
+                'status_color'            => $status_color,
+                'diff'              => $diff,
+                
             );
         }
 
@@ -50,6 +71,7 @@ class AttendanceController extends Controller
 
     public function store(Request $request){
         $student_folder = $request->get('student_folder');
+        $start_time = $request->get('start_time');
 
         $student = Student::where('student_folder',$student_folder)->first();
         $isAttendance = Attendance::where('student_id',$student->id)
@@ -59,7 +81,8 @@ class AttendanceController extends Controller
             Attendance::create(
                 [
                     'student_id'         => $student->id,
-                    'user_id'            => auth()->user()->id
+                    'user_id'            => auth()->user()->id,
+                    'start_time'        => $start_time,
                 ]   
             );
             return response()->json(['success' => 'Successfully attended.']);
